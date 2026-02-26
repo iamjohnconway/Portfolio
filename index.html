@@ -14,13 +14,16 @@
             --accent-green: #00f5d4;
             --accent-orange: #ff6b35;
             --accent-yellow: #ffd60a;
-            --dark-bg: #050508;
-            --darker-bg: #020203;
-            --card-bg: rgba(10, 10, 15, 0.7);
+            --dark-bg: #000000;
+            --darker-bg: #000000;
+            --card-bg: rgba(5, 5, 8, 0.75);
             --glass-border: rgba(255, 255, 255, 0.05);
             --text-primary: #e0e0e0;
-            --text-secondary: #6c6c7c;
-            --text-muted: #4a4a5a;
+            --text-secondary: #b0b0c0;
+            --text-muted: #6a6a7a;
+            --nebula-purple: #2d1b4e;
+            --nebula-blue: #0a192f;
+            --star-glow: rgba(255, 255, 255, 0.8);
         }
         
         * {
@@ -38,7 +41,22 @@
             position: relative;
         }
 
-        .gradient-bg {
+        /* Gargantua Black Hole Background */
+        .gargantua-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background-image: url('https://4kwallpapers.com/images/wallpapers/gargantua-black-4480x2520-9621.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .gargantua-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -46,92 +64,44 @@
             height: 100%;
             z-index: -2;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(199, 125, 255, 0.05) 0%, transparent 60%),
-                linear-gradient(180deg, var(--darker-bg) 0%, var(--dark-bg) 50%, #0a0a0f 100%);
-            background-size: 200% 200%;
-            animation: gradientMove 20s ease infinite;
+                radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%),
+                linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.8) 100%);
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .orb {
+        /* Starfield Canvas */
+        #starfield {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Cosmic Dust Particles */
+        .dust {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.4);
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.15;
             z-index: -1;
-            animation: float 25s infinite ease-in-out;
+            animation: dustFloat 20s infinite linear;
         }
 
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, var(--accent-purple), #1a1a2e);
-            top: -150px;
-            right: -150px;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #0f3460, var(--accent-cyan));
-            bottom: -100px;
-            left: -100px;
-            animation-delay: -8s;
-        }
-
-        .orb-3 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #16213e, var(--accent-pink));
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -16s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(20px, -20px) scale(1.05); }
-            66% { transform: translate(-15px, 15px) scale(0.95); }
-        }
-
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.02;
-            z-index: -1;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            pointer-events: none;
-        }
-
-        .grid-lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: -1;
-            pointer-events: none;
+        @keyframes dustFloat {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 30px;
             position: relative;
             z-index: 1;
         }
@@ -144,11 +114,12 @@
             z-index: 100;
             display: flex;
             gap: 8px;
-            background: rgba(10, 10, 15, 0.8);
+            background: rgba(5, 5, 8, 0.8);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             border-radius: 50px;
             padding: 5px;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
         }
 
         .lang-btn {
@@ -172,6 +143,7 @@
             background: rgba(0, 217, 255, 0.1);
             color: var(--accent-cyan);
             border: 1px solid rgba(0, 217, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
         }
 
         .lang-btn:hover:not(.active) {
@@ -181,39 +153,60 @@
 
         .header {
             text-align: center;
-            margin-bottom: 60px;
-            padding: 60px 0 40px;
+            margin-bottom: 80px;
+            padding: 80px 0 50px;
+            position: relative;
         }
 
         .badge {
             display: inline-block;
-            padding: 10px 24px;
-            background: rgba(0, 217, 255, 0.05);
-            border: 1px solid rgba(0, 217, 255, 0.2);
+            padding: 12px 28px;
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.3);
             border-radius: 50px;
             color: var(--accent-cyan);
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 30px;
             font-family: 'JetBrains Mono', monospace;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
+            animation: badgeShine 3s infinite;
+        }
+
+        @keyframes badgeShine {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
         }
 
         h1 {
-            font-size: clamp(2.2rem, 7vw, 3.5rem);
+            font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             background: linear-gradient(135deg, #ffffff 0%, var(--text-primary) 50%, var(--accent-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -1px;
+            text-shadow: 0 0 60px rgba(0, 217, 255, 0.4);
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
             font-weight: 300;
             margin-bottom: 30px;
@@ -224,23 +217,25 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 24px;
-            background: rgba(0, 245, 212, 0.05);
-            border: 1px solid rgba(0, 245, 212, 0.2);
+            padding: 14px 28px;
+            background: rgba(0, 245, 212, 0.08);
+            border: 1px solid rgba(0, 245, 212, 0.3);
             border-radius: 50px;
             color: var(--accent-green);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: 13px;
             letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.1);
         }
 
         .status-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background: var(--accent-green);
             border-radius: 50%;
             animation: blink 2s infinite;
-            box-shadow: 0 0 8px var(--accent-green);
+            box-shadow: 0 0 15px var(--accent-green), 0 0 30px var(--accent-green);
         }
 
         @keyframes blink {
@@ -250,15 +245,17 @@
 
         .glass-card {
             background: var(--card-bg);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 35px;
-            margin-bottom: 25px;
+            border-radius: 20px;
+            padding: 45px;
+            margin-bottom: 35px;
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 40px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
         .glass-card::before {
@@ -268,58 +265,100 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.4), transparent);
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
 
         .glass-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(0, 217, 255, 0.15);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px);
+            border-color: rgba(0, 217, 255, 0.2);
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(0, 217, 255, 0.15);
+        }
+
+        .glass-card:hover::after {
+            opacity: 1;
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .card-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            background: rgba(0, 217, 255, 0.05);
-            border: 1px solid rgba(0, 217, 255, 0.15);
+            font-size: 24px;
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.2);
             color: var(--accent-cyan);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .glass-card:hover .card-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .glass-card:hover .card-icon::before {
+            left: 100%;
         }
 
         .card-title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 600;
             color: var(--text-primary);
             letter-spacing: -0.5px;
         }
 
         .card-subtitle {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             font-family: 'JetBrains Mono', monospace;
-            margin-top: 3px;
+            margin-top: 5px;
         }
 
         .terminal-content {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.9;
+            font-size: 14px;
+            line-height: 2;
             color: var(--text-secondary);
         }
 
         .terminal-line {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
@@ -360,47 +399,66 @@
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
 
         .skill-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .skill-item:hover {
-            background: rgba(0, 217, 255, 0.03);
-            border-color: rgba(0, 217, 255, 0.1);
-            transform: translateX(3px);
+            background: rgba(0, 217, 255, 0.05);
+            border-color: rgba(0, 217, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .skill-item:hover::before {
+            opacity: 1;
         }
 
         .skill-name {
             font-weight: 500;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
+            gap: 10px;
+            font-size: 1.05rem;
         }
 
         .skill-desc {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .skill-bar {
-            height: 3px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 2px;
             overflow: hidden;
-            margin-top: 12px;
+            margin-top: 15px;
+            position: relative;
         }
 
         .skill-progress {
@@ -408,12 +466,13 @@
             background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
             border-radius: 2px;
             transition: width 1s ease;
-            opacity: 0.7;
+            opacity: 0.8;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
         }
 
         .timeline {
             position: relative;
-            padding-left: 25px;
+            padding-left: 30px;
         }
 
         .timeline::before {
@@ -422,112 +481,159 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 1px;
+            width: 2px;
             background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple), transparent);
-            opacity: 0.3;
+            opacity: 0.4;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 30px;
-            padding-left: 25px;
+            margin-bottom: 40px;
+            padding-left: 30px;
         }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -29px;
-            top: 6px;
-            width: 8px;
-            height: 8px;
+            left: -34px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
             background: var(--dark-bg);
-            border: 1px solid var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(0, 217, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 25px rgba(0, 217, 255, 0.9);
+            transform: scale(1.2);
         }
 
         .timeline-date {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--accent-cyan);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             letter-spacing: 1px;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         .timeline-title {
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 6px;
-            font-size: 1.05rem;
+            margin-bottom: 8px;
+            font-size: 1.15rem;
         }
 
         .timeline-company {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+            font-size: 1rem;
+            margin-bottom: 15px;
         }
 
         .timeline-desc {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
+            line-height: 1.8;
         }
 
         /* Pipeline Diagram Styles */
         .pipeline-container {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 35px;
+            margin-top: 25px;
             overflow-x: auto;
+            position: relative;
+        }
+
+        .pipeline-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), transparent, rgba(157, 78, 221, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         .pipeline-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: 14px;
             color: var(--accent-cyan);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
             letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
         }
 
         .pipeline-flow {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            min-width: 800px;
-            padding: 10px 0;
+            gap: 12px;
+            min-width: 900px;
+            padding: 15px 0;
         }
 
         .pipeline-node {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
+            gap: 10px;
+            padding: 15px 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            min-width: 90px;
+            border-radius: 12px;
+            min-width: 100px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pipeline-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.4), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .pipeline-node:hover {
-            background: rgba(0, 217, 255, 0.05);
-            border-color: rgba(0, 217, 255, 0.3);
-            transform: translateY(-2px);
+            background: rgba(0, 217, 255, 0.08);
+            border-color: rgba(0, 217, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.15);
+        }
+
+        .pipeline-node:hover::before {
+            opacity: 1;
         }
 
         .pipeline-node-icon {
-            font-size: 20px;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+
+        .pipeline-node:hover .pipeline-node-icon {
+            transform: scale(1.15);
         }
 
         .pipeline-node-name {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-primary);
             text-align: center;
             font-weight: 500;
@@ -535,33 +641,39 @@
 
         .pipeline-node-desc {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 8px;
+            font-size: 9px;
             color: var(--text-muted);
             text-align: center;
-            max-width: 80px;
+            max-width: 90px;
             line-height: 1.4;
         }
 
         .pipeline-arrow {
             color: var(--accent-cyan);
-            font-size: 16px;
-            opacity: 0.6;
+            font-size: 20px;
+            opacity: 0.7;
+            animation: pulseArrow 2s infinite;
+        }
+
+        @keyframes pulseArrow {
+            0%, 100% { opacity: 0.7; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(4px); }
         }
 
         .pipeline-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
         }
 
         .pipeline-group-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
+            font-size: 10px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -569,63 +681,87 @@
 
         .pipeline-group-nodes {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .social-section {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 50px 0;
+            gap: 20px;
+            margin: 60px 0;
             flex-wrap: wrap;
         }
 
         .social-link {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            gap: 12px;
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .social-link:hover {
-            background: rgba(0, 217, 255, 0.05);
-            border-color: rgba(0, 217, 255, 0.2);
+            background: rgba(0, 217, 255, 0.08);
+            border-color: rgba(0, 217, 255, 0.3);
             color: var(--accent-cyan);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.15);
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
         }
 
         .social-link svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
             opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .social-link:hover svg {
+            opacity: 1;
         }
 
         .cta-container {
             text-align: center;
-            margin: 60px 0;
+            margin: 70px 0;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 16px 36px;
-            background: rgba(0, 217, 255, 0.05);
-            border: 1px solid rgba(0, 217, 255, 0.2);
+            gap: 15px;
+            padding: 18px 40px;
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.3);
             border-radius: 50px;
             color: var(--accent-cyan);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -644,7 +780,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
             transition: left 0.5s;
         }
 
@@ -653,23 +789,23 @@
         }
 
         .cta-button:hover {
-            background: rgba(0, 217, 255, 0.1);
-            border-color: rgba(0, 217, 255, 0.3);
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(0, 217, 255, 0.15);
+            background: rgba(0, 217, 255, 0.12);
+            border-color: rgba(0, 217, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 217, 255, 0.3), 0 0 80px rgba(0, 217, 255, 0.15);
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 30px 20px;
             }
             
             .header {
-                padding: 40px 0 30px;
+                padding: 50px 0 35px;
             }
             
             .glass-card {
-                padding: 25px;
+                padding: 30px;
             }
             
             .skills-grid {
@@ -683,7 +819,7 @@
             
             .social-link {
                 width: 100%;
-                max-width: 280px;
+                max-width: 320px;
                 justify-content: center;
             }
 
@@ -693,14 +829,14 @@
             }
 
             .pipeline-flow {
-                transform: scale(0.8);
+                transform: scale(0.75);
                 transform-origin: left center;
             }
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
         }
         
         ::-webkit-scrollbar-track {
@@ -708,16 +844,16 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 5px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 217, 255, 0.3);
+            background: rgba(0, 217, 255, 0.4);
         }
 
         ::selection {
-            background: rgba(0, 217, 255, 0.2);
+            background: rgba(0, 217, 255, 0.3);
             color: var(--text-primary);
         }
 
@@ -747,7 +883,7 @@
 
         [data-lang="fa"] .timeline {
             padding-left: 0;
-            padding-right: 25px;
+            padding-right: 30px;
         }
 
         [data-lang="fa"] .timeline::before {
@@ -757,12 +893,12 @@
 
         [data-lang="fa"] .timeline-item {
             padding-left: 0;
-            padding-right: 25px;
+            padding-right: 30px;
         }
 
         [data-lang="fa"] .timeline-item::before {
             left: auto;
-            right: -29px;
+            right: -34px;
         }
 
         .rtl-text {
@@ -772,12 +908,17 @@
     </style>
 </head>
 <body>
-    <div class="gradient-bg"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="noise"></div>
-    <div class="grid-lines"></div>
+    <div class="gargantua-bg"></div>
+    <div class="gargantua-overlay"></div>
+    <canvas id="starfield"></canvas>
+    
+    <!-- Cosmic Dust -->
+    <div class="dust" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="dust" style="left: 25%; animation-delay: 4s;"></div>
+    <div class="dust" style="left: 40%; animation-delay: 8s;"></div>
+    <div class="dust" style="left: 55%; animation-delay: 12s;"></div>
+    <div class="dust" style="left: 70%; animation-delay: 16s;"></div>
+    <div class="dust" style="left: 85%; animation-delay: 20s;"></div>
 
     <div class="lang-switcher">
         <button class="lang-btn active" onclick="switchLang('en')" id="btn-en">EN</button>
@@ -786,7 +927,7 @@
 
     <div class="container" id="content" data-lang="en">
         <header class="header">
-            <div class="badge" data-en="Cybersecurity Specialist" data-fa="متخصص امنیت سایبر">Cybersecurity Specialist</div>
+            <div class="badge" data-en="Cybersecurity Specialist" data-fa="تکنسین جونیور هک و امنیت">Cybersecurity Junior Technician</div>
             <h1>Mohammad Mahdi Sharifpour</h1>
             <p class="subtitle" data-en="Junior Cybersecurity Specialist | Babol, Iran" data-fa="کارشناس امنیت سایبر جونیور | بابل، ایران">Junior Cybersecurity Specialist | Babol, Iran</p>
             <div class="status-indicator">
@@ -809,9 +950,9 @@
                     <span class="command">whoami</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="highlight" data-en="Junior Cybersecurity Specialist" data-fa="کارشناس امنیت سایبر جونیور">Junior Cybersecurity Specialist</span> 
+                    <span class="highlight" data-en="Junior Cybersecurity Specialist" data-fa="کارشناس امنیت سایبری جونیور">Junior Cybersecurity Specialist</span> 
                     <span data-en="with hands-on experience in web application security testing, penetration testing, and SIEM-based monitoring."
-                          data-fa="با تجربه عملی در تست امنیت وب‌اپلیکیشن، تست نفوذ و مانیتورینگ مبتنی بر SIEM.">
+                          data-fa="با تجربه عملی در تست امنیت وب‌ اپلیکیشن، تست نفوذ و مانیتورینگ بر اساس SIEM.">
                         with hands-on experience in web application security testing, penetration testing, and SIEM-based monitoring.
                     </span>
                 </div>
@@ -824,6 +965,10 @@
                 <div class="terminal-line">
                     <span class="success">&#10003;</span> 
                     <span data-en="English (C1) | Persian (Native)" data-fa="انگلیسی (C1) | فارسی (بومی)">English (C1) | Persian (Native)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="success">&#10003;</span> 
+                    <span data-en="Book Worm" data-fa="خوره کتاب">Book Worm</span>
                 </div>
             </div>
         </div>
@@ -842,10 +987,10 @@
                     <div class="timeline-title" data-en="Junior Cybersecurity Intern" data-fa="کارآموز امنیت سایبر">Junior Cybersecurity Intern</div>
                     <div class="timeline-company" data-en="SaminRay IT Company, Babol, Iran" data-fa="شرکت فناوری اطلاعات ثمین‌ری، بابل">SaminRay IT Company, Babol, Iran</div>
                     <div class="timeline-desc">
-                        <span data-en="&#8226; Conducted web security audits using Burp Suite Pro, SonarQube, Kali Linux&#10;&#8226; Performed reconnaissance and vulnerability assessment (Nmap, Metasploit, SQLmap, httpx, ffuf, nuclei)&#10;&#8226; Collaborated with dev teams to remediate critical vulnerabilities"
+                        <span data-en="&#8226; Performed web security assessments by applying offensive and defensive methodologies(Red/Blue teams  ), leveraging Linux-based environments and Kali Linux toolchains to simulate different strategies, analyze, and support.&#10;&#8226; Performed reconnaissance and vulnerability assessment&#10;&#8226; Collaborated with dev teams to remediate critical vulnerabilities"
                               data-fa="&#8226; انجام ممیزی امنیت وب با Burp Suite Pro، SonarQube، Kali Linux&#10;&#8226; انجام شناسایی و ارزیابی آسیب‌پذیری (Nmap، Metasploit، SQLmap، httpx، ffuf، nuclei)&#10;&#8226; همکاری با تیم‌های توسعه برای رفع آسیب‌پذیری‌های بحرانی">
-                            &#8226; Conducted web security audits using Burp Suite Pro, SonarQube, Kali Linux<br>
-                            &#8226; Performed reconnaissance and vulnerability assessment (Nmap, Metasploit, SQLmap, httpx, ffuf, nuclei)<br>
+                            &#8226; Performed web security assessments by applying offensive and defensive methodologies(<mark style="color: #dc2626;background: none;">Red</mark>/<mark style="color: #2563eb;background: none;">Blue</mark> teams), leveraging Linux-based environments and Kali Linux toolchains to simulate different strategies, analyze, and support.<br>
+                            &#8226; Performed reconnaissance and vulnerability assessment<br>
                             &#8226; Collaborated with dev teams to remediate critical vulnerabilities
                         </span>
                     </div>
@@ -979,7 +1124,8 @@
                     </div>
 
                     <!-- FastAPI Note -->
-                    <div style="margin-top: 20px; text-align: center; padding: 15px; background: rgba(0, 217, 255, 0.05); border-radius: 8px; border: 1px solid rgba(0, 217, 255, 0.2);">
+                    <div style="margin-top: 20px; text-align: center; padding: 15px; background: rgba(0, 217, 255, 0.05); border-radius: 8px; border: 1px solid rgba(0, 217, 255, 0.2); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent); animation: badgeShine 3s infinite;"></div>
                         <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-cyan); margin-bottom: 5px;">
                             &#128013; FastAPI Custom Login API
                         </div>
@@ -1050,10 +1196,9 @@
                                 <span data-en="Web Application Testing" data-fa="تست وب‌اپلیکیشن">Web Application Testing</span>
                             </div>
                             <div class="skill-desc" style="font-size: 0.8rem; margin-top: 8px;">
-                                <span data-en="Burp Suite Pro, OWASP ZAP, SonarQube&#10;Identifying: XSS, SQLi, IDOR, CSRF, SSRF"
+                                <span data-en="XSS, SQLi, IDOR, CSRF, SSRF &#10;-> using adversary-driven analysis and manual security testing strategies to uncover realistic attack vectors"
                                       data-fa="Burp Suite Pro، OWASP ZAP، SonarQube&#10;شناسایی: XSS، SQLi، IDOR، CSRF، SSRF">
-                                    Burp Suite Pro, OWASP ZAP, SonarQube<br>
-                                    Identifying: XSS, SQLi, IDOR, CSRF, SSRF
+                                    XSS, SQLi, IDOR, CSRF, SSRF -> using adversary-driven analysis and manual security testing strategies to uncover realistic attack vectors
                                 </span>
                             </div>
                         </div>
@@ -1064,10 +1209,9 @@
                                 <span data-en="Network & Infrastructure" data-fa="شبکه و زیرساخت">Network & Infrastructure</span>
                             </div>
                             <div class="skill-desc" style="font-size: 0.8rem; margin-top: 8px;">
-                                <span data-en="Nmap, Metasploit, Nessus, OpenVAS&#10;Port scanning, service enumeration, exploit testing"
+                                <span data-en="Exploited networks with vulnerable ports and services&#10;-> through reconnaissance-driven analysis and controlled exploitation techniques."
                                       data-fa="Nmap، Metasploit، Nessus، OpenVAS&#10;اسکن پورت، شمارش سرویس، تست اکسپلویت">
-                                    Nmap, Metasploit, Nessus, OpenVAS<br>
-                                    Port scanning, service enumeration, exploit testing
+                                    Exploited networks with vulnerable ports and services -> through reconnaissance-driven analysis and controlled exploitation techniques.
                                 </span>
                             </div>
                         </div>
@@ -1078,25 +1222,25 @@
                                 <span data-en="API Security Testing" data-fa="تست امنیت API">API Security Testing</span>
                             </div>
                             <div class="skill-desc" style="font-size: 0.8rem; margin-top: 8px;">
-                                <span data-en="Postman, ffuf, httpx, SQLmap&#10;REST/GraphQL testing, fuzzing, injection tests"
+                                <span data-en="Assessed REST APIs using&#10;systematic fuzzing, input manipulation, and injection-based testing strategies"
                                       data-fa="Postman، ffuf، httpx، SQLmap&#10;تست REST/GraphQL، فازینگ، تست تزریق">
-                                    Postman, ffuf, httpx, SQLmap<br>
-                                    REST/GraphQL testing, fuzzing, injection tests
+                                    Assessed REST APIs using systematic fuzzing, input manipulation, and injection-based testing strategies
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(0, 245, 212, 0.05); border-radius: 10px; border: 1px solid rgba(0, 245, 212, 0.2);">
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(0, 245, 212, 0.05); border-radius: 10px; border: 1px solid rgba(0, 245, 212, 0.2); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 245, 212, 0.1), transparent); animation: badgeShine 3s infinite;"></div>
                         <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-green); margin-bottom: 8px;">
                             <span data-en="[ACHIEVEMENTS]" data-fa="[دستاوردها]">[ACHIEVEMENTS]</span>
                         </div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">
-                            <span data-en="&#8226; Identified 5-10 critical vulnerabilities per assessment&#10;&#8226; Reduced security risks by 85% through remediation validation&#10;&#8226; Documented 20+ comprehensive security reports&#10;&#8226; Collaborated with development teams for secure code practices"
+                            <span data-en="&#8226; Identified 5-10 critical vulnerabilities per assessment&#10;&#8226; Reduced security risks by 85% through remediation validation&#10;&#8226; Documented 5+ comprehensive security reports&#10;&#8226; Collaborated with development teams for secure code practices"
                                   data-fa="&#8226; شناسایی 5-10 آسیب‌پذیری بحرانی در هر ارزیابی&#10;&#8226; کاهش 85٪ ریسک‌های امنیتی از طریق اعتبارسنجی رفع&#10;&#8226; مستندسازی بیش از 20 گزارش امنیتی جامع&#10;&#8226; همکاری با تیم‌های توسعه برای شیوه‌های کدنویسی امن">
                                 &#8226; Identified 5-10 critical vulnerabilities per assessment<br>
                                 &#8226; Reduced security risks by 85% through remediation validation<br>
-                                &#8226; Documented 20+ comprehensive security reports<br>
+                                &#8226; Documented 5+ comprehensive security reports<br>
                                 &#8226; Collaborated with development teams for secure code practices
                             </span>
                         </div>
@@ -1119,12 +1263,12 @@
                         <span>&#128737;</span> 
                         <span data-en="Penetration Testing" data-fa="تست نفوذ">Penetration Testing</span>
                     </div>
-                    <div class="skill-desc" data-en="Burp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap"
-                         data-fa="Burp Suite Pro، SonarQube، Kali Linux، Nmap، Metasploit، SQLmap">
-                        Burp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap
+                    <div class="skill-desc" data-en="urp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap, httpx, nuclie, ffuf, amass, subfinder, etc"
+                         data-fa="urp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap, httpx, nuclie, ffuf, amass, subfinder, etc">
+                        Burp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap, httpx, nuclie, ffuf, amass, subfinder, etc
                     </div>
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 90%"></div>
+                        <div class="skill-progress" style="width: 83%"></div>
                     </div>
                 </div>
                 <div class="skill-item">
@@ -1132,9 +1276,9 @@
                         <span>&#128202;</span> 
                         <span data-en="Security Monitoring" data-fa="مانیتورینگ امنیت">Security Monitoring</span>
                     </div>
-                    <div class="skill-desc" data-en="Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix"
-                         data-fa="Prometheus، Grafana، ELK Stack، Wazuh، Loki، FluentBit، Zabbix">
-                        Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix
+                    <div class="skill-desc" data-en="Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix, Kafka, AlertManager"
+                         data-fa="Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix, Kafka, AlertManager">
+                        Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix, Kafka, AlertManager
                     </div>
                     <div class="skill-bar">
                         <div class="skill-progress" style="width: 85%"></div>
@@ -1146,11 +1290,11 @@
                         <span data-en="Infrastructure" data-fa="زیرساخت">Infrastructure</span>
                     </div>
                     <div class="skill-desc" data-en="Docker, Linux Administration, Python, Nginx, Bash Scripting"
-                         data-fa="Docker، لینوکس ادمینیستریشن، پایتون، Nginx، Bash Scripting">
+                         data-fa="Docker, Linux Administration, Python, Nginx, Bash Scripting">
                         Docker, Linux Administration, Python, Nginx, Bash Scripting
                     </div>
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 80%"></div>
+                        <div class="skill-progress" style="width: 75%"></div>
                     </div>
                 </div>
             </div>
@@ -1175,7 +1319,7 @@
                     <div class="timeline-date" data-en="GRADUATED" data-fa="فارغ‌التحصیل">GRADUATED</div>
                     <div class="timeline-title" data-en="High School Diploma - Mathematics & Physics" data-fa="دیپلم دبیرستان - ریاضی و فیزیک">High School Diploma - Mathematics & Physics</div>
                     <div class="timeline-company" data-en="AmirKabir Highschool" data-fa="دبیرستان امیرکبیر">AmirKabir Highschool</div>
-                    <div class="timeline-desc success" data-en="Graduated with Honors" data-fa="فارغ‌التحصیل با افتخارات">Graduated with Honors</div>
+                    <div class="timeline-desc success" data-en="Graduated with Honors" data-fa="فارغ‌التحصیل شده با افتخار">Graduated with Honors</div>
                 </div>
             </div>
         </div>
@@ -1203,7 +1347,7 @@
             </a>
         </div>
 
-        <div style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">
+        <div style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">
             <span class="comment" data-en="// Built with precision by Mohammad Mahdi Sharifpour"
                   data-fa="// ساخته شده با دقت توسط محمدمهدی شریف‌پور">
                 // Built with precision by Mohammad Mahdi Sharifpour
@@ -1212,6 +1356,100 @@
     </div>
 
     <script>
+        // Starfield Animation
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let stars = [];
+        const starCount = 150;
+        
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        
+        class Star {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.z = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 1.5;
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.twinkleSpeed = Math.random() * 0.02 + 0.01;
+                this.twinklePhase = Math.random() * Math.PI * 2;
+            }
+            
+            update() {
+                this.twinklePhase += this.twinkleSpeed;
+                this.opacity = 0.3 + Math.sin(this.twinklePhase) * 0.3;
+                
+                const mouseX = (window.mouseX || width/2) - width/2;
+                const mouseY = (window.mouseY || height/2) - height/2;
+                
+                this.x -= mouseX * 0.0001 * this.z;
+                this.y -= mouseY * 0.0001 * this.z;
+                
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * this.z, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fill();
+                
+                if (this.opacity > 0.6) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * this.z * 2, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.2})`;
+                    ctx.fill();
+                }
+            }
+        }
+        
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < starCount; i++) {
+                stars.push(new Star());
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        window.addEventListener('resize', () => {
+            resize();
+            initStars();
+        });
+        
+        window.addEventListener('mousemove', (e) => {
+            window.mouseX = e.clientX;
+            window.mouseY = e.clientY;
+        });
+        
+        resize();
+        initStars();
+        animate();
+
+        // Language Switcher
         function switchLang(lang) {
             const content = document.getElementById('content');
             const btnEn = document.getElementById('btn-en');
@@ -1229,7 +1467,6 @@
                 document.body.style.direction = 'ltr';
             }
             
-            // Update all translatable elements
             document.querySelectorAll('[data-en][data-fa]').forEach(el => {
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     el.placeholder = el.getAttribute('data-' + lang);
@@ -1238,19 +1475,6 @@
                 }
             });
         }
-
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 15;
-                const xOffset = (0.5 - x) * speed;
-                const yOffset = (0.5 - y) * speed;
-                orb.style.transform = 'translate(' + xOffset + 'px, ' + yOffset + 'px)';
-            });
-        });
     </script>
 </body>
 </html>
