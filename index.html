@@ -13,6 +13,7 @@
             --accent-pink: #c77dff;
             --accent-green: #00f5d4;
             --accent-orange: #ff6b35;
+            --accent-yellow: #ffd60a;
             --dark-bg: #050508;
             --darker-bg: #020203;
             --card-bg: rgba(10, 10, 15, 0.7);
@@ -133,6 +134,49 @@
             padding: 40px 20px;
             position: relative;
             z-index: 1;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 8px;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 5px;
+        }
+
+        .lang-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lang-btn.active {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .header {
@@ -430,6 +474,104 @@
             line-height: 1.7;
         }
 
+        /* Pipeline Diagram Styles */
+        .pipeline-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .pipeline-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 800px;
+            padding: 10px 0;
+        }
+
+        .pipeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            min-width: 90px;
+            transition: all 0.3s ease;
+        }
+
+        .pipeline-node:hover {
+            background: rgba(0, 217, 255, 0.05);
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pipeline-node-icon {
+            font-size: 20px;
+        }
+
+        .pipeline-node-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-primary);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .pipeline-node-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 80px;
+            line-height: 1.4;
+        }
+
+        .pipeline-arrow {
+            color: var(--accent-cyan);
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        .pipeline-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .pipeline-group-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pipeline-group-nodes {
+            display: flex;
+            gap: 8px;
+        }
+
         .social-section {
             display: flex;
             justify-content: center;
@@ -544,10 +686,21 @@
                 max-width: 280px;
                 justify-content: center;
             }
+
+            .lang-switcher {
+                top: 10px;
+                right: 10px;
+            }
+
+            .pipeline-flow {
+                transform: scale(0.8);
+                transform-origin: left center;
+            }
         }
 
         ::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
         }
         
         ::-webkit-scrollbar-track {
@@ -567,6 +720,55 @@
             background: rgba(0, 217, 255, 0.2);
             color: var(--text-primary);
         }
+
+        [data-lang="fa"] {
+            direction: rtl;
+            font-family: 'Space Grotesk', 'Vazirmatn', sans-serif;
+        }
+
+        [data-lang="fa"] .terminal-content,
+        [data-lang="fa"] .card-subtitle,
+        [data-lang="fa"] .timeline-date,
+        [data-lang="fa"] .pipeline-node-name,
+        [data-lang="fa"] .pipeline-node-desc,
+        [data-lang="fa"] .pipeline-title,
+        [data-lang="fa"] .pipeline-group-title {
+            font-family: 'JetBrains Mono', 'Vazirmatn', monospace;
+        }
+
+        [data-lang="fa"] .terminal-line {
+            flex-direction: row-reverse;
+        }
+
+        [data-lang="fa"] .card-header,
+        [data-lang="fa"] .timeline-item {
+            flex-direction: row-reverse;
+        }
+
+        [data-lang="fa"] .timeline {
+            padding-left: 0;
+            padding-right: 25px;
+        }
+
+        [data-lang="fa"] .timeline::before {
+            left: auto;
+            right: 0;
+        }
+
+        [data-lang="fa"] .timeline-item {
+            padding-left: 0;
+            padding-right: 25px;
+        }
+
+        [data-lang="fa"] .timeline-item::before {
+            left: auto;
+            right: -29px;
+        }
+
+        .rtl-text {
+            direction: rtl;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -577,14 +779,19 @@
     <div class="noise"></div>
     <div class="grid-lines"></div>
 
-    <div class="container">
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="switchLang('en')" id="btn-en">EN</button>
+        <button class="lang-btn" onclick="switchLang('fa')" id="btn-fa">FA</button>
+    </div>
+
+    <div class="container" id="content" data-lang="en">
         <header class="header">
-            <div class="badge">Cybersecurity Specialist</div>
+            <div class="badge" data-en="Cybersecurity Specialist" data-fa="متخصص امنیت سایبر">Cybersecurity Specialist</div>
             <h1>Mohammad Mahdi Sharifpour</h1>
-            <p class="subtitle">Junior Cybersecurity Specialist | Babol, Iran</p>
+            <p class="subtitle" data-en="Junior Cybersecurity Specialist | Babol, Iran" data-fa="کارشناس امنیت سایبر جونیور | بابل، ایران">Junior Cybersecurity Specialist | Babol, Iran</p>
             <div class="status-indicator">
                 <span class="status-dot"></span>
-                <span>Available for Opportunities</span>
+                <span data-en="Available for Opportunities" data-fa="آماده برای فرصت‌های شغلی">Available for Opportunities</span>
             </div>
         </header>
 
@@ -592,7 +799,7 @@
             <div class="card-header">
                 <div class="card-icon">&#128100;</div>
                 <div>
-                    <div class="card-title">About Me</div>
+                    <div class="card-title" data-en="About Me" data-fa="درباره من">About Me</div>
                     <div class="card-subtitle">cat profile.json</div>
                 </div>
             </div>
@@ -602,13 +809,21 @@
                     <span class="command">whoami</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="highlight">Junior Cybersecurity Specialist</span> with hands-on experience in web application security testing, penetration testing, and SIEM-based monitoring.
+                    <span class="highlight" data-en="Junior Cybersecurity Specialist" data-fa="کارشناس امنیت سایبر جونیور">Junior Cybersecurity Specialist</span> 
+                    <span data-en="with hands-on experience in web application security testing, penetration testing, and SIEM-based monitoring."
+                          data-fa="با تجربه عملی در تست امنیت وب‌اپلیکیشن، تست نفوذ و مانیتورینگ مبتنی بر SIEM.">
+                        with hands-on experience in web application security testing, penetration testing, and SIEM-based monitoring.
+                    </span>
                 </div>
                 <div class="terminal-line" style="margin-top: 15px;">
-                    <span class="comment">// Strong understanding of attacker mindset and secure application design</span>
+                    <span class="comment" data-en="// Strong understanding of attacker mindset and secure application design"
+                          data-fa="// درک قوی از ذهنیت مهاجم و طراحی اپلیکیشن امن">
+                        // Strong understanding of attacker mindset and secure application design
+                    </span>
                 </div>
                 <div class="terminal-line">
-                    <span class="success">&#10003;</span> English (C1) | Persian (Native)
+                    <span class="success">&#10003;</span> 
+                    <span data-en="English (C1) | Persian (Native)" data-fa="انگلیسی (C1) | فارسی (بومی)">English (C1) | Persian (Native)</span>
                 </div>
             </div>
         </div>
@@ -617,19 +832,22 @@
             <div class="card-header">
                 <div class="card-icon" style="border-color: rgba(157, 78, 221, 0.3); background: rgba(157, 78, 221, 0.05); color: var(--accent-purple);">&#128188;</div>
                 <div>
-                    <div class="card-title">Experience</div>
+                    <div class="card-title" data-en="Experience" data-fa="تجربه کاری">Experience</div>
                     <div class="card-subtitle">tail -f career.log</div>
                 </div>
             </div>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">2025 - PRESENT</div>
-                    <div class="timeline-title">Junior Cybersecurity Intern</div>
-                    <div class="timeline-company">SaminRay IT Company, Babol, Iran</div>
+                    <div class="timeline-title" data-en="Junior Cybersecurity Intern" data-fa="کارآموز امنیت سایبر">Junior Cybersecurity Intern</div>
+                    <div class="timeline-company" data-en="SaminRay IT Company, Babol, Iran" data-fa="شرکت فناوری اطلاعات ثمین‌ری، بابل">SaminRay IT Company, Babol, Iran</div>
                     <div class="timeline-desc">
-                        &#8226; Conducted web security audits using Burp Suite Pro, SonarQube, Kali Linux<br>
-                        &#8226; Performed reconnaissance and vulnerability assessment (Nmap, Metasploit, SQLmap, httpx, ffuf, nuclei)<br>
-                        &#8226; Collaborated with dev teams to remediate critical vulnerabilities
+                        <span data-en="&#8226; Conducted web security audits using Burp Suite Pro, SonarQube, Kali Linux&#10;&#8226; Performed reconnaissance and vulnerability assessment (Nmap, Metasploit, SQLmap, httpx, ffuf, nuclei)&#10;&#8226; Collaborated with dev teams to remediate critical vulnerabilities"
+                              data-fa="&#8226; انجام ممیزی امنیت وب با Burp Suite Pro، SonarQube، Kali Linux&#10;&#8226; انجام شناسایی و ارزیابی آسیب‌پذیری (Nmap، Metasploit، SQLmap، httpx، ffuf، nuclei)&#10;&#8226; همکاری با تیم‌های توسعه برای رفع آسیب‌پذیری‌های بحرانی">
+                            &#8226; Conducted web security audits using Burp Suite Pro, SonarQube, Kali Linux<br>
+                            &#8226; Performed reconnaissance and vulnerability assessment (Nmap, Metasploit, SQLmap, httpx, ffuf, nuclei)<br>
+                            &#8226; Collaborated with dev teams to remediate critical vulnerabilities
+                        </span>
                     </div>
                 </div>
             </div>
@@ -639,34 +857,248 @@
             <div class="card-header">
                 <div class="card-icon" style="border-color: rgba(199, 125, 255, 0.3); background: rgba(199, 125, 255, 0.05); color: var(--accent-pink);">&#128640;</div>
                 <div>
-                    <div class="card-title">Projects</div>
+                    <div class="card-title" data-en="Projects" data-fa="پروژه‌ها">Projects</div>
                     <div class="card-subtitle">ls -la /projects</div>
                 </div>
             </div>
-            <div class="terminal-content">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">SIEM MONITORING</div>
-                        <div class="timeline-title">Enterprise SIEM Monitoring</div>
-                        <div class="timeline-desc">
-                            Docker, Kafka, FastAPI, Grafana stack<br>
-                            <span class="success">&#8594; Reduced unauthorized login attempts by 85%</span>
+            
+            <!-- Project 1: SIEM -->
+            <div style="margin-bottom: 40px;">
+                <div class="timeline-item" style="margin-bottom: 20px;">
+                    <div class="timeline-date" data-en="SIEM MONITORING" data-fa="مانیتورینگ SIEM">SIEM MONITORING</div>
+                    <div class="timeline-title" data-en="Mini SIEM Integration with Prometheus" data-fa="یکپارچه‌سازی SIEM مینی با Prometheus">Mini SIEM Integration with Prometheus</div>
+                    <div class="timeline-desc" style="margin-bottom: 15px;">
+                        <span data-en="A lightweight SIEM solution for real-time monitoring and alerting of infrastructure metrics and logs."
+                              data-fa="یک راه‌حل SIEM سبک برای مانیتورینگ و هشداردهی بلادرنگ متریک‌ها و لاگ‌های زیرساخت.">
+                            A lightweight SIEM solution for real-time monitoring and alerting of infrastructure metrics and logs.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Pipeline Diagram -->
+                <div class="pipeline-container">
+                    <div class="pipeline-title" data-en="DATA FLOW PIPELINE" data-fa="خط لوله جریان داده">DATA FLOW PIPELINE</div>
+                    <div class="pipeline-flow">
+                        <!-- Sources -->
+                        <div class="pipeline-group">
+                            <div class="pipeline-group-title" data-en="DATA SOURCES" data-fa="منابع داده">DATA SOURCES</div>
+                            <div class="pipeline-group-nodes">
+                                <div class="pipeline-node">
+                                    <div class="pipeline-node-icon">&#128423;</div>
+                                    <div class="pipeline-node-name">Node Exporter</div>
+                                    <div class="pipeline-node-desc" data-en="System metrics" data-fa="متریک‌های سیستم">System metrics</div>
+                                </div>
+                                <div class="pipeline-node">
+                                    <div class="pipeline-node-icon">&#127760;</div>
+                                    <div class="pipeline-node-name">Nginx Exporter</div>
+                                    <div class="pipeline-node-desc" data-en="Web server logs" data-fa="لاگ‌های وب‌سرور">Web server logs</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-arrow">&#8594;</div>
+
+                        <!-- Kafka -->
+                        <div class="pipeline-node" style="border-color: var(--accent-yellow);">
+                            <div class="pipeline-node-icon" style="color: var(--accent-yellow);">&#128418;</div>
+                            <div class="pipeline-node-name">Kafka</div>
+                            <div class="pipeline-node-desc" data-en="Message broker & streaming" data-fa="پیام‌رسان و استریمینگ">Message broker & streaming</div>
+                        </div>
+
+                        <div class="pipeline-arrow">&#8594;</div>
+
+                        <!-- Kafka Exporter -->
+                        <div class="pipeline-node">
+                            <div class="pipeline-node-icon">&#128295;</div>
+                            <div class="pipeline-node-name">Kafka Exporter</div>
+                            <div class="pipeline-node-desc" data-en="Kafka metrics" data-fa="متریک‌های Kafka">Kafka metrics</div>
+                        </div>
+
+                        <div class="pipeline-arrow">&#8594;</div>
+
+                        <!-- Prometheus -->
+                        <div class="pipeline-node" style="border-color: var(--accent-orange);">
+                            <div class="pipeline-node-icon" style="color: var(--accent-orange);">&#128293;</div>
+                            <div class="pipeline-node-name">Prometheus</div>
+                            <div class="pipeline-node-desc" data-en="Metrics collection" data-fa="جمع‌آوری متریک">Metrics collection</div>
+                        </div>
+
+                        <div class="pipeline-arrow">&#8594;</div>
+
+                        <!-- AlertManager -->
+                        <div class="pipeline-node">
+                            <div class="pipeline-node-icon">&#128276;</div>
+                            <div class="pipeline-node-name">AlertManager</div>
+                            <div class="pipeline-node-desc" data-en="Alert routing" data-fa="مسیریابی هشدار">Alert routing</div>
+                        </div>
+
+                        <div class="pipeline-arrow">&#8594;</div>
+
+                        <!-- Grafana -->
+                        <div class="pipeline-node" style="border-color: var(--accent-purple);">
+                            <div class="pipeline-node-icon" style="color: var(--accent-purple);">&#128200;</div>
+                            <div class="pipeline-node-name">Grafana</div>
+                            <div class="pipeline-node-desc" data-en="Visualization" data-fa="مصورسازی">Visualization</div>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">LOG PARSING</div>
-                        <div class="timeline-title">Log Parsing Engine</div>
-                        <div class="timeline-desc">
-                            Custom Lua/Fluent-bit parsing engine<br>
-                            <span class="success">&#8594; Improved threat detection response by 70%</span>
+
+                    <!-- Second Row: Logs Pipeline -->
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                        <div class="pipeline-title" style="font-size: 10px; margin-bottom: 15px;" data-en="LOGS PIPELINE" data-fa="خط لوله لاگ‌ها">LOGS PIPELINE</div>
+                        <div class="pipeline-flow" style="justify-content: center;">
+                            <div class="pipeline-node">
+                                <div class="pipeline-node-icon">&#128221;</div>
+                                <div class="pipeline-node-name">App Logs</div>
+                                <div class="pipeline-node-desc" data-en="Application logs" data-fa="لاگ‌های اپلیکیشن">Application logs</div>
+                            </div>
+
+                            <div class="pipeline-arrow">&#8594;</div>
+
+                            <div class="pipeline-node" style="border-color: var(--accent-cyan);">
+                                <div class="pipeline-node-icon" style="color: var(--accent-cyan);">&#128167;</div>
+                                <div class="pipeline-node-name">FluentBit</div>
+                                <div class="pipeline-node-desc" data-en="Log collection" data-fa="جمع‌آوری لاگ">Log collection</div>
+                            </div>
+
+                            <div class="pipeline-arrow">&#8594;</div>
+
+                            <div class="pipeline-node">
+                                <div class="pipeline-node-icon">&#128269;</div>
+                                <div class="pipeline-node-name">Loki</div>
+                                <div class="pipeline-node-desc" data-en="Log aggregation" data-fa="تجمیع لاگ">Log aggregation</div>
+                            </div>
+
+                            <div class="pipeline-arrow">&#8594;</div>
+
+                            <div class="pipeline-node" style="border-color: var(--accent-purple);">
+                                <div class="pipeline-node-icon" style="color: var(--accent-purple);">&#128200;</div>
+                                <div class="pipeline-node-name">Grafana</div>
+                                <div class="pipeline-node-desc" data-en="Log visualization" data-fa="مصورسازی لاگ">Log visualization</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">VULNERABILITY ASSESSMENT</div>
-                        <div class="timeline-title">Vulnerability Assessments</div>
-                        <div class="timeline-desc">
-                            Identified 5-10 critical vulnerabilities per assessment<br>
-                            IDOR, XSS, SQLi, Broken Access Control (OWASP Top 10)
+
+                    <!-- FastAPI Note -->
+                    <div style="margin-top: 20px; text-align: center; padding: 15px; background: rgba(0, 217, 255, 0.05); border-radius: 8px; border: 1px solid rgba(0, 217, 255, 0.2);">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-cyan); margin-bottom: 5px;">
+                            &#128013; FastAPI Custom Login API
+                        </div>
+                        <div style="font-size: 10px; color: var(--text-muted);" data-en="Custom authentication API for testing login monitoring and anomaly detection"
+                             data-fa="API احراز هویت سفارشی برای تست مانیتورینگ لاگین و تشخیص ناهنجاری">
+                            Custom authentication API for testing login monitoring and anomaly detection
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools List -->
+                <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div class="skill-item" style="padding: 12px;">
+                        <div class="skill-name" style="font-size: 0.85rem;">
+                            <span style="color: var(--accent-orange);">&#128293;</span> Prometheus
+                        </div>
+                        <div class="skill-desc" data-en="Metrics collection & storage" data-fa="جمع‌آوری و ذخیره‌سازی متریک">Metrics collection & storage</div>
+                    </div>
+                    <div class="skill-item" style="padding: 12px;">
+                        <div class="skill-name" style="font-size: 0.85rem;">
+                            <span style="color: var(--accent-yellow);">&#128418;</span> Kafka
+                        </div>
+                        <div class="skill-desc" data-en="Message streaming broker" data-fa="پیام‌رسان استریمینگ">Message streaming broker</div>
+                    </div>
+                    <div class="skill-item" style="padding: 12px;">
+                        <div class="skill-name" style="font-size: 0.85rem;">
+                            <span style="color: var(--accent-cyan);">&#128167;</span> FluentBit
+                        </div>
+                        <div class="skill-desc" data-en="Lightweight log processor" data-fa="پردازشگر سبک لاگ">Lightweight log processor</div>
+                    </div>
+                    <div class="skill-item" style="padding: 12px;">
+                        <div class="skill-name" style="font-size: 0.85rem;">
+                            <span style="color: var(--accent-purple);">&#128200;</span> Grafana
+                        </div>
+                        <div class="skill-desc" data-en="Visualization & dashboards" data-fa="مصورسازی و داشبورد">Visualization & dashboards</div>
+                    </div>
+                    <div class="skill-item" style="padding: 12px;">
+                        <div class="skill-name" style="font-size: 0.85rem;">
+                            <span style="color: var(--accent-green);">&#128269;</span> Loki
+                        </div>
+                        <div class="skill-desc" data-en="Log aggregation system" data-fa="سیستم تجمیع لاگ">Log aggregation system</div>
+                    </div>
+                    <div class="skill-item" style="padding: 12px;">
+                        <div class="skill-name" style="font-size: 0.85rem;">
+                            <span style="color: var(--accent-pink);">&#128276;</span> AlertManager
+                        </div>
+                        <div class="skill-desc" data-en="Alert routing & grouping" data-fa="مسیریابی و گروه‌بندی هشدار">Alert routing & grouping</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Vulnerability Assessment -->
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;">
+                <div class="timeline-item">
+                    <div class="timeline-date" style="color: var(--accent-pink);" data-en="SECURITY TESTING" data-fa="تست امنیت">SECURITY TESTING</div>
+                    <div class="timeline-title" data-en="Vulnerability Assessment & Penetration Testing" data-fa="ارزیابی آسیب‌پذیری و تست نفوذ">Vulnerability Assessment & Penetration Testing</div>
+                    <div class="timeline-desc" style="margin-bottom: 15px;">
+                        <span data-en="Comprehensive security assessments for web applications and infrastructure, identifying critical vulnerabilities and providing remediation strategies."
+                              data-fa="ارزیابی‌های جامع امنیتی برای وب‌اپلیکیشن‌ها و زیرساخت، شناسایی آسیب‌پذیری‌های بحرانی و ارائه راهکارهای رفع">
+                            Comprehensive security assessments for web applications and infrastructure, identifying critical vulnerabilities and providing remediation strategies.
+                        </span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div class="skill-item">
+                            <div class="skill-name" style="color: var(--accent-orange);">
+                                <span>&#128737;</span> 
+                                <span data-en="Web Application Testing" data-fa="تست وب‌اپلیکیشن">Web Application Testing</span>
+                            </div>
+                            <div class="skill-desc" style="font-size: 0.8rem; margin-top: 8px;">
+                                <span data-en="Burp Suite Pro, OWASP ZAP, SonarQube&#10;Identifying: XSS, SQLi, IDOR, CSRF, SSRF"
+                                      data-fa="Burp Suite Pro، OWASP ZAP، SonarQube&#10;شناسایی: XSS، SQLi، IDOR، CSRF، SSRF">
+                                    Burp Suite Pro, OWASP ZAP, SonarQube<br>
+                                    Identifying: XSS, SQLi, IDOR, CSRF, SSRF
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-name" style="color: var(--accent-cyan);">
+                                <span>&#128269;</span> 
+                                <span data-en="Network & Infrastructure" data-fa="شبکه و زیرساخت">Network & Infrastructure</span>
+                            </div>
+                            <div class="skill-desc" style="font-size: 0.8rem; margin-top: 8px;">
+                                <span data-en="Nmap, Metasploit, Nessus, OpenVAS&#10;Port scanning, service enumeration, exploit testing"
+                                      data-fa="Nmap، Metasploit، Nessus، OpenVAS&#10;اسکن پورت، شمارش سرویس، تست اکسپلویت">
+                                    Nmap, Metasploit, Nessus, OpenVAS<br>
+                                    Port scanning, service enumeration, exploit testing
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-name" style="color: var(--accent-green);">
+                                <span>&#128202;</span> 
+                                <span data-en="API Security Testing" data-fa="تست امنیت API">API Security Testing</span>
+                            </div>
+                            <div class="skill-desc" style="font-size: 0.8rem; margin-top: 8px;">
+                                <span data-en="Postman, ffuf, httpx, SQLmap&#10;REST/GraphQL testing, fuzzing, injection tests"
+                                      data-fa="Postman، ffuf، httpx، SQLmap&#10;تست REST/GraphQL، فازینگ، تست تزریق">
+                                    Postman, ffuf, httpx, SQLmap<br>
+                                    REST/GraphQL testing, fuzzing, injection tests
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(0, 245, 212, 0.05); border-radius: 10px; border: 1px solid rgba(0, 245, 212, 0.2);">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-green); margin-bottom: 8px;">
+                            <span data-en="[ACHIEVEMENTS]" data-fa="[دستاوردها]">[ACHIEVEMENTS]</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">
+                            <span data-en="&#8226; Identified 5-10 critical vulnerabilities per assessment&#10;&#8226; Reduced security risks by 85% through remediation validation&#10;&#8226; Documented 20+ comprehensive security reports&#10;&#8226; Collaborated with development teams for secure code practices"
+                                  data-fa="&#8226; شناسایی 5-10 آسیب‌پذیری بحرانی در هر ارزیابی&#10;&#8226; کاهش 85٪ ریسک‌های امنیتی از طریق اعتبارسنجی رفع&#10;&#8226; مستندسازی بیش از 20 گزارش امنیتی جامع&#10;&#8226; همکاری با تیم‌های توسعه برای شیوه‌های کدنویسی امن">
+                                &#8226; Identified 5-10 critical vulnerabilities per assessment<br>
+                                &#8226; Reduced security risks by 85% through remediation validation<br>
+                                &#8226; Documented 20+ comprehensive security reports<br>
+                                &#8226; Collaborated with development teams for secure code practices
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -677,16 +1109,18 @@
             <div class="card-header">
                 <div class="card-icon" style="border-color: rgba(255, 107, 53, 0.3); background: rgba(255, 107, 53, 0.05); color: var(--accent-orange);">&#9889;</div>
                 <div>
-                    <div class="card-title">Technical Skills</div>
+                    <div class="card-title" data-en="Technical Skills" data-fa="مهارت‌های فنی">Technical Skills</div>
                     <div class="card-subtitle">nmap --script skills</div>
                 </div>
             </div>
             <div class="skills-grid">
                 <div class="skill-item">
                     <div class="skill-name">
-                        <span>&#128737;</span> Penetration Testing
+                        <span>&#128737;</span> 
+                        <span data-en="Penetration Testing" data-fa="تست نفوذ">Penetration Testing</span>
                     </div>
-                    <div class="skill-desc">
+                    <div class="skill-desc" data-en="Burp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap"
+                         data-fa="Burp Suite Pro، SonarQube، Kali Linux، Nmap، Metasploit، SQLmap">
                         Burp Suite Pro, SonarQube, Kali Linux, Nmap, Metasploit, SQLmap
                     </div>
                     <div class="skill-bar">
@@ -695,9 +1129,11 @@
                 </div>
                 <div class="skill-item">
                     <div class="skill-name">
-                        <span>&#128202;</span> Security Monitoring
+                        <span>&#128202;</span> 
+                        <span data-en="Security Monitoring" data-fa="مانیتورینگ امنیت">Security Monitoring</span>
                     </div>
-                    <div class="skill-desc">
+                    <div class="skill-desc" data-en="Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix"
+                         data-fa="Prometheus، Grafana، ELK Stack، Wazuh، Loki، FluentBit، Zabbix">
                         Prometheus, Grafana, ELK Stack, Wazuh, Loki, FluentBit, Zabbix
                     </div>
                     <div class="skill-bar">
@@ -706,9 +1142,11 @@
                 </div>
                 <div class="skill-item">
                     <div class="skill-name">
-                        <span>&#128421;</span> Infrastructure
+                        <span>&#128421;</span> 
+                        <span data-en="Infrastructure" data-fa="زیرساخت">Infrastructure</span>
                     </div>
-                    <div class="skill-desc">
+                    <div class="skill-desc" data-en="Docker, Linux Administration, Python, Nginx, Bash Scripting"
+                         data-fa="Docker، لینوکس ادمینیستریشن، پایتون، Nginx، Bash Scripting">
                         Docker, Linux Administration, Python, Nginx, Bash Scripting
                     </div>
                     <div class="skill-bar">
@@ -722,22 +1160,22 @@
             <div class="card-header">
                 <div class="card-icon" style="border-color: rgba(0, 245, 212, 0.3); background: rgba(0, 245, 212, 0.05); color: var(--accent-green);">&#127891;</div>
                 <div>
-                    <div class="card-title">Education</div>
+                    <div class="card-title" data-en="Education" data-fa="تحصیلات">Education</div>
                     <div class="card-subtitle">cat /etc/education</div>
                 </div>
             </div>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">2024 - 2028</div>
-                    <div class="timeline-title">B.CE - Computer Engineering</div>
-                    <div class="timeline-company">University of Science and Technology (USTMB)</div>
-                    <div class="timeline-desc">Expected Graduation: 2028</div>
+                    <div class="timeline-title" data-en="B.CE - Computer Engineering" data-fa="کارشناسی مهندسی کامپیوتر">B.CE - Computer Engineering</div>
+                    <div class="timeline-company" data-en="University of Science and Technology (USTMB)" data-fa="دانشگاه علوم و فناوری (USTMB)">University of Science and Technology (USTMB)</div>
+                    <div class="timeline-desc" data-en="Expected Graduation: 2028" data-fa="زمان فارغ‌التحصیلی: 1407">Expected Graduation: 2028</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">GRADUATED</div>
-                    <div class="timeline-title">High School Diploma - Mathematics & Physics</div>
-                    <div class="timeline-company">AmirKabir Highschool</div>
-                    <div class="timeline-desc success">Graduated with Honors</div>
+                    <div class="timeline-date" data-en="GRADUATED" data-fa="فارغ‌التحصیل">GRADUATED</div>
+                    <div class="timeline-title" data-en="High School Diploma - Mathematics & Physics" data-fa="دیپلم دبیرستان - ریاضی و فیزیک">High School Diploma - Mathematics & Physics</div>
+                    <div class="timeline-company" data-en="AmirKabir Highschool" data-fa="دبیرستان امیرکبیر">AmirKabir Highschool</div>
+                    <div class="timeline-desc success" data-en="Graduated with Honors" data-fa="فارغ‌التحصیل با افتخارات">Graduated with Honors</div>
                 </div>
             </div>
         </div>
@@ -760,17 +1198,47 @@
         <div class="cta-container">
             <a href="https://drive.google.com/file/d/1WzWWVEtDlsO04SABImLI3ZAZM2juBJut/view" target="_blank" class="cta-button">
                 <span>&#128196;</span>
-                View Full CV
+                <span data-en="View Full CV" data-fa="مشاهده رزومه کامل">View Full CV</span>
                 <span>&#8594;</span>
             </a>
         </div>
 
         <div style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;">
-            <span class="comment">// Built with precision by Mohammad Mahdi Sharifpour</span>
+            <span class="comment" data-en="// Built with precision by Mohammad Mahdi Sharifpour"
+                  data-fa="// ساخته شده با دقت توسط محمدمهدی شریف‌پور">
+                // Built with precision by Mohammad Mahdi Sharifpour
+            </span>
         </div>
     </div>
 
     <script>
+        function switchLang(lang) {
+            const content = document.getElementById('content');
+            const btnEn = document.getElementById('btn-en');
+            const btnFa = document.getElementById('btn-fa');
+            
+            if (lang === 'fa') {
+                content.setAttribute('data-lang', 'fa');
+                btnEn.classList.remove('active');
+                btnFa.classList.add('active');
+                document.body.style.direction = 'rtl';
+            } else {
+                content.setAttribute('data-lang', 'en');
+                btnFa.classList.remove('active');
+                btnEn.classList.add('active');
+                document.body.style.direction = 'ltr';
+            }
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-en][data-fa]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = el.getAttribute('data-' + lang);
+                } else {
+                    el.innerHTML = el.getAttribute('data-' + lang).replace(/&#10;/g, '<br>');
+                }
+            });
+        }
+
         document.addEventListener('mousemove', (e) => {
             const orbs = document.querySelectorAll('.orb');
             const x = e.clientX / window.innerWidth;
